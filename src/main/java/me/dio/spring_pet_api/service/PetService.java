@@ -1,17 +1,18 @@
 package me.dio.spring_pet_api.service;
 
+import me.dio.spring_pet_api.domain.dto.PetDTO;
 import me.dio.spring_pet_api.domain.model.Pet;
 
 import java.util.List;
 
 public interface PetService {
-    List<Pet> listarTodos();
+    List<PetDTO> listarTodos();
 
-    Pet buscarPorId(Long id);
+    PetDTO buscarPorId(Long id);
 
-    Pet salvar(Pet pet);
+    PetDTO salvar(PetDTO petDTO);
 
-    Pet atualizar(Long id, Pet petAtualizado);
+    PetDTO atualizar(Long id, PetDTO petDtoAtualizado);
 
     void deletar(Long id);
 }

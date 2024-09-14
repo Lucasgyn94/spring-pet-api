@@ -1,17 +1,18 @@
 package me.dio.spring_pet_api.service;
 
+import me.dio.spring_pet_api.domain.dto.VeterinarioDTO;
 import me.dio.spring_pet_api.domain.model.Veterinario;
 
 import java.util.List;
 
 public interface VeterinarioService {
-    List<Veterinario> listarTodos();
+    List<VeterinarioDTO> listarTodos();
 
-    Veterinario buscarPorId(Long id);
+    VeterinarioDTO buscarPorId(Long id);
 
-    Veterinario salvar(Veterinario veterinario);
+    VeterinarioDTO salvar(VeterinarioDTO veterinario);
 
-    Veterinario atualizar(Long id, Veterinario veterinarioAtualizado);
+    VeterinarioDTO atualizar(Long id, VeterinarioDTO veterinarioDtoAtualizado);
 
     void deletar(Long id);
 

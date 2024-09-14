@@ -1,6 +1,6 @@
 package me.dio.spring_pet_api.service.impl;
 
-import me.dio.spring_pet_api.domain.model.Agendamento;
+import me.dio.spring_pet_api.domain.dto.AgendamentoDTO;
 import me.dio.spring_pet_api.domain.repository.AgendamentoRepository;
 import me.dio.spring_pet_api.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,33 +14,29 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Autowired
     private AgendamentoRepository agendamentoRepository;
 
+
     @Override
-    public List<Agendamento> listarTodos() {
-        return agendamentoRepository.findAll();
+    public List<AgendamentoDTO> listarTodos() {
+        return List.of();
     }
 
     @Override
-    public Agendamento buscarPorId(Long id) {
-        return agendamentoRepository.findById(id).orElseThrow(() -> new RuntimeException("agendamento nao encontrado!"));
+    public AgendamentoDTO buscarPorId(Long id) {
+        return null;
     }
 
     @Override
-    public Agendamento salvar(Agendamento agendamento) {
-        return agendamentoRepository.save(agendamento);
+    public AgendamentoDTO salvar(AgendamentoDTO agendamentoDTO) {
+        return null;
     }
 
     @Override
-    public Agendamento atualizar(Long id, Agendamento agendamentoAtualizado) {
-        Agendamento agendamento = buscarPorId(id);
-        agendamento.setPet(agendamentoAtualizado.getPet());
-        agendamento.setVeterinario(agendamentoAtualizado.getVeterinario());
-        agendamento.setDataHora(agendamentoAtualizado.getDataHora());
-
-        return agendamento;
+    public AgendamentoDTO atualizar(Long id, AgendamentoDTO agendamentoDtoAtualizado) {
+        return null;
     }
 
     @Override
     public void deletar(Long id) {
-        agendamentoRepository.deleteById(id);
+
     }
 }

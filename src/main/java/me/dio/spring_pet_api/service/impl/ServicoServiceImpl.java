@@ -1,8 +1,6 @@
 package me.dio.spring_pet_api.service.impl;
 
-import me.dio.spring_pet_api.domain.model.Pet;
-import me.dio.spring_pet_api.domain.model.Servico;
-import me.dio.spring_pet_api.domain.repository.PetRepository;
+import me.dio.spring_pet_api.domain.dto.ServicoDTO;
 import me.dio.spring_pet_api.domain.repository.ServicoRepository;
 import me.dio.spring_pet_api.service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,33 +13,29 @@ public class ServicoServiceImpl implements ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
 
+
     @Override
-    public List<Servico> listarTodos() {
-        return servicoRepository.findAll();
+    public List<ServicoDTO> listarTodos() {
+        return List.of();
     }
 
     @Override
-    public Servico buscarPorId(Long id) {
-        return servicoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pet com esse id nao encontrado!"));
+    public ServicoDTO buscarPorId(Long id) {
+        return null;
     }
 
     @Override
-    public Servico salvar(Servico servico) {
-        return servicoRepository.save(servico);
+    public ServicoDTO salvar(ServicoDTO servicoDTO) {
+        return null;
     }
 
     @Override
-    public Servico atualizar(Long id, Servico servicoAtualizado) {
-        Servico servico = buscarPorId(id);
-        servico.setDescricao(servicoAtualizado.getDescricao());
-        servico.setPets(servicoAtualizado.getPets());
-        servico.setPreco(servicoAtualizado.getPreco());
-
-        return servico;
+    public ServicoDTO atualizar(Long id, ServicoDTO servicoDtoAtualizado) {
+        return null;
     }
 
     @Override
     public void deletar(Long id) {
-        servicoRepository.deleteById(id);
+
     }
 }

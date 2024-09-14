@@ -1,17 +1,18 @@
 package me.dio.spring_pet_api.service;
 
+import me.dio.spring_pet_api.domain.dto.ServicoDTO;
 import me.dio.spring_pet_api.domain.model.Servico;
 
 import java.util.List;
 
 public interface ServicoService {
-    List<Servico> listarTodos();
+    List<ServicoDTO> listarTodos();
 
-    Servico buscarPorId(Long id);
+    ServicoDTO buscarPorId(Long id);
 
-    Servico salvar(Servico servico);
+    ServicoDTO salvar(ServicoDTO servicoDTO);
 
-    Servico atualizar(Long id, Servico servicoAtualizado);
+    ServicoDTO atualizar(Long id, ServicoDTO servicoDtoAtualizado);
 
     void deletar(Long id);
 }

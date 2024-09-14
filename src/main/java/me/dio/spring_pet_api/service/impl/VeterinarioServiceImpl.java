@@ -1,7 +1,6 @@
 package me.dio.spring_pet_api.service.impl;
 
-import me.dio.spring_pet_api.domain.model.Veterinario;
-import me.dio.spring_pet_api.domain.repository.ServicoRepository;
+import me.dio.spring_pet_api.domain.dto.VeterinarioDTO;
 import me.dio.spring_pet_api.domain.repository.VeterinarioRepository;
 import me.dio.spring_pet_api.service.VeterinarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,32 +14,29 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     @Autowired
     private VeterinarioRepository veterinarioRepository;
 
+
     @Override
-    public List<Veterinario> listarTodos() {
-        return veterinarioRepository.findAll();
+    public List<VeterinarioDTO> listarTodos() {
+        return List.of();
     }
 
     @Override
-    public Veterinario buscarPorId(Long id) {
-        return veterinarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Veterinario nao encontrado com esse id"));
+    public VeterinarioDTO buscarPorId(Long id) {
+        return null;
     }
 
     @Override
-    public Veterinario salvar(Veterinario veterinario) {
-        return veterinarioRepository.save(veterinario);
+    public VeterinarioDTO salvar(VeterinarioDTO veterinario) {
+        return null;
     }
 
     @Override
-    public Veterinario atualizar(Long id, Veterinario veterinarioAtualizado) {
-        Veterinario veterinario = buscarPorId(id);
-        veterinario.setAgendamentos(veterinarioAtualizado.getAgendamentos());
-        veterinario.setNome(veterinarioAtualizado.getNome());
-        veterinario.setEspecialidade(veterinarioAtualizado.getEspecialidade());
-        return veterinario;
+    public VeterinarioDTO atualizar(Long id, VeterinarioDTO veterinarioDtoAtualizado) {
+        return null;
     }
 
     @Override
     public void deletar(Long id) {
-        veterinarioRepository.deleteById(id);
+
     }
 }
