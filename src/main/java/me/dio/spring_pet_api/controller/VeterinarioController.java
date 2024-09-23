@@ -1,5 +1,6 @@
 package me.dio.spring_pet_api.controller;
 
+import me.dio.spring_pet_api.domain.dto.VeterinarioDTO;
 import me.dio.spring_pet_api.domain.model.Servico;
 import me.dio.spring_pet_api.domain.model.Veterinario;
 import me.dio.spring_pet_api.service.ServicoService;
@@ -21,29 +22,29 @@ public class VeterinarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Veterinario>> listarTodos() {
-        List<Veterinario> veterinarios = veterinarioService.listarTodos();
+    public ResponseEntity<List<VeterinarioDTO>> listarTodos() {
+        List<VeterinarioDTO> veterinarios = veterinarioService.listarTodos();
         return ResponseEntity.ok(veterinarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Veterinario> buscarPorId(@PathVariable Long id) {
-        Veterinario veterinario = veterinarioService.buscarPorId(id);
+    public ResponseEntity<VeterinarioDTO> buscarPorId(@PathVariable Long id) {
+        VeterinarioDTO veterinario = veterinarioService.buscarPorId(id);
         return ResponseEntity.ok(veterinario);
     }
 
     @PostMapping
-    public ResponseEntity<Veterinario> salvar(@RequestBody Veterinario veterinario) {
-        Veterinario veterinarioSalvo = veterinarioService.salvar(veterinario);
+    public ResponseEntity<VeterinarioDTO> salvar(@RequestBody VeterinarioDTO veterinario) {
+        VeterinarioDTO veterinarioSalvo = veterinarioService.salvar(veterinario);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(veterinarioSalvo);
     }
 
     @PutMapping
-    public ResponseEntity<Veterinario> atualizar(Long id, Veterinario veterinarioAtualizado) {
-        Veterinario veterinario = veterinarioService.atualizar(id, veterinarioAtualizado);
+    public ResponseEntity<VeterinarioDTO> atualizar(Long id, VeterinarioDTO veterinarioDTOAtualizado) {
+        VeterinarioDTO veterinario = veterinarioService.atualizar(id, veterinarioDTOAtualizado);
 
-        if (veterinario.getId() != null) {
+        if (veterinario.id() != null) {
             return ResponseEntity.ok(veterinario);
         } else {
             return ResponseEntity.notFound().build();

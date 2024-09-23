@@ -1,5 +1,6 @@
 package me.dio.spring_pet_api.controller;
 
+import me.dio.spring_pet_api.domain.dto.ServicoDTO;
 import me.dio.spring_pet_api.domain.model.Servico;
 import me.dio.spring_pet_api.domain.repository.ServicoRepository;
 import me.dio.spring_pet_api.service.ServicoService;
@@ -21,29 +22,29 @@ public class ServicoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Servico>> listarTodos() {
-        List<Servico> servicos = servicoService.listarTodos();
+    public ResponseEntity<List<ServicoDTO>> listarTodos() {
+        List<ServicoDTO> servicos = servicoService.listarTodos();
         return ResponseEntity.ok(servicos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Servico> buscarPorId(@PathVariable Long id) {
-        Servico servico = servicoService.buscarPorId(id);
+    public ResponseEntity<ServicoDTO> buscarPorId(@PathVariable Long id) {
+        ServicoDTO servico = servicoService.buscarPorId(id);
         return ResponseEntity.ok(servico);
     }
 
     @PostMapping
-    public ResponseEntity<Servico> salvar(@RequestBody Servico servico) {
-        Servico servicoSalvo = servicoService.salvar(servico);
+    public ResponseEntity<ServicoDTO> salvar(@RequestBody ServicoDTO servico) {
+        ServicoDTO servicoSalvo = servicoService.salvar(servico);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoSalvo);
     }
 
     @PutMapping
-    public ResponseEntity<Servico> atualizar(Long id, Servico servicoAtualizado) {
-        Servico servico = servicoService.atualizar(id, servicoAtualizado);
+    public ResponseEntity<ServicoDTO> atualizar(Long id, ServicoDTO servicoAtualizado) {
+        ServicoDTO servico = servicoService.atualizar(id, servicoAtualizado);
 
-        if (servico.getId() != null) {
+        if (servico.id() != null) {
             return ResponseEntity.ok(servico);
         } else {
             return ResponseEntity.notFound().build();

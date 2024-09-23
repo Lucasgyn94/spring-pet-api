@@ -7,15 +7,12 @@ import lombok.Setter;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class VeterinarioDTO {
-    private Long id;
-    private String nome;
-    private String especialidade;
-    private List<AgendamentoDTO> agendamentos;
+public record VeterinarioDTO (
+        Long id,
+        String nome,
+        String especialidade,
+        List<AgendamentoDTO> agendamentos
+) {
 
 
 }
