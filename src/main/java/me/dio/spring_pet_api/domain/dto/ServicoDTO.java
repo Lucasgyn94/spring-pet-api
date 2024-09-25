@@ -1,17 +1,18 @@
 package me.dio.spring_pet_api.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-
-public record ServicoDTO (
+public record ServicoDTO(
         Long id,
+
+        @NotBlank
         String descricao,
-        BigDecimal preco,
-        List<PetDTO> pets
-){ }
+
+        @NotNull
+        @Positive
+        BigDecimal preco
+) { }

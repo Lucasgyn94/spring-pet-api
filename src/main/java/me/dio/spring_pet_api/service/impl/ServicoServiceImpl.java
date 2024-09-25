@@ -1,148 +1,115 @@
 package me.dio.spring_pet_api.service.impl;
 
-import jakarta.transaction.Transactional;
-import me.dio.spring_pet_api.domain.dto.*;
-import me.dio.spring_pet_api.domain.model.*;
+import me.dio.spring_pet_api.domain.dto.ServicoDTO;
+import me.dio.spring_pet_api.domain.model.Pet;
+import me.dio.spring_pet_api.domain.model.Servico;
+import me.dio.spring_pet_api.domain.repository.PetRepository;
 import me.dio.spring_pet_api.domain.repository.ServicoRepository;
 import me.dio.spring_pet_api.service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class ServicoServiceImpl implements ServicoService {
+
     @Autowired
     private ServicoRepository servicoRepository;
 
+    @Autowired
+    private PetRepository petRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ServicoDTO> listarTodos() {
-
         return servicoRepository.findAll().stream()
                 .map(this::convertServicoToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ServicoDTO buscarPorId(Long id) {
-
         Servico servico = servicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente de id: " + id + " nao encontrado!"));
-
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado com o ID: " + id));
         return convertServicoToDto(servico);
     }
 
     @Override
+    @Transactional
     public ServicoDTO salvar(ServicoDTO servicoDTO) {
-        Servico servico = convertServicoToEntity(servicoDTO);
-        return convertServicoToDto(servicoRepository.save(servico));
+        if (servicoDTO == null) {
+            throw new IllegalArgumentException("ServicoDTO não pode ser nulo");
+        }
+
+        Servico servico = new Servico();
+        servico.setDescricao(servicoDTO.descricao());
+        servico.setPreco(servicoDTO.preco());
+
+        try {
+            Servico servicoSalvo = servicoRepository.save(servico);
+            return convertServicoToDto(servicoSalvo);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar o serviço", e);
+        }
     }
 
     @Override
-    public ServicoDTO atualizar(Long id, ServicoDTO servicoDtoAtualizado) {
+    @Transactional
+    public ServicoDTO atualizar(Long id, ServicoDTO servicoDTO) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID do serviço não pode ser nulo");
+        }
+
         Servico servico = servicoRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Servico de id: " + id + " nao encontrado"));
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado com o ID: " + id));
 
-        servico.setId(servicoDtoAtualizado.id());
-        servico.setDescricao(servicoDtoAtualizado.descricao());
-        servico.setPreco(servicoDtoAtualizado.preco());
+        servico.setDescricao(servicoDTO.descricao());
+        servico.setPreco(servicoDTO.preco());
 
-        servico.setPets(servicoDtoAtualizado.pets().stream().map(this::convertPetToEntity).collect(Collectors.toList()));
 
-        return convertServicoToDto(servico);
+        try {
+            Servico servicoAtualizado = servicoRepository.save(servico);
+            return convertServicoToDto(servicoAtualizado);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar o serviço", e);
+        }
     }
 
     @Override
+    @Transactional
     public void deletar(Long id) {
-        servicoRepository.deleteById(id);
+        if (id == null) {
+            throw new IllegalArgumentException("ID do serviço não pode ser nulo");
+        }
+
+        if (!servicoRepository.existsById(id)) {
+            throw new RuntimeException("Serviço não encontrado com o ID: " + id);
+        }
+
+        try {
+            servicoRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar o serviço", e);
+        }
     }
 
     private ServicoDTO convertServicoToDto(Servico servico) {
         return new ServicoDTO(
                 servico.getId(),
                 servico.getDescricao(),
-                servico.getPreco(),
-                servico.getPets().stream()
-                        .map(this::convertPetToDto)
-                        .collect(Collectors.toList()));
-    }
-
-    private PetDTO convertPetToDto(Pet pet) {
-        return new PetDTO(
-                pet.getId(),
-                pet.getNome(),
-                pet.getTipo(),
-                convertClienteToDto(pet.getCliente()),
-                pet.getServicos().stream()
-                        .map(this::convertServicoToDto)
-                        .collect(Collectors.toList()),
-                pet.getAgendamentos().stream()
-                        .map(this::convertAgendamentoToDto)
-                        .collect(Collectors.toList())
+                servico.getPreco()
         );
     }
 
-    private ClienteDTO convertClienteToDto(Cliente cliente) {
-        return new ClienteDTO(
-                cliente.getId(),
-                cliente.getNome(),
-                cliente.getTelefone()
-        );
-    }
-
-    private AgendamentoDTO convertAgendamentoToDto(Agendamento agendamento) {
-        return new AgendamentoDTO(
-                agendamento.getId(),
-                agendamento.getDataHora(),
-                convertPetToDto(agendamento.getPet()),
-                convertVeterinarioToDto(agendamento.getVeterinario()));
-    }
-
-    private VeterinarioDTO convertVeterinarioToDto(Veterinario veterinario) {
-        return new VeterinarioDTO(
-                veterinario.getId(),
-                veterinario.getNome(),
-                veterinario.getEspecialidade(),
-                veterinario.getAgendamentos().stream()
-                        .map(this::convertAgendamentoToDto)
-                        .collect(Collectors.toList()));
-    }
-
-    private Servico convertServicoToEntity(ServicoDTO servicoDTO) {
+    private Servico convertServicoToEntity(ServicoDTO dto) {
         Servico servico = new Servico();
-
-        servico.setId(servicoDTO.id());
-        servico.setDescricao(servicoDTO.descricao());
-        servico.setPreco(servicoDTO.preco());
-
+        servico.setId(dto.id());
+        servico.setDescricao(dto.descricao());
+        servico.setPreco(dto.preco());
         return servico;
-    }
-
-    private Pet convertPetToEntity(PetDTO petDTO) {
-        Pet pet = new Pet();
-
-        pet.setId(petDTO.id());
-        pet.setNome(petDTO.nome());
-        pet.setTipo(petDTO.tipo());
-        pet.setServicos(petDTO.servicos().stream()
-                .map(this::convertServicoToEntity)
-                .collect(Collectors.toList()));
-        pet.setAgendamentos(petDTO.agendamentos().stream()
-                .map(this::convertAgendamentoToEntinty)
-                .collect(Collectors.toList()));
-
-        return pet;
-    }
-
-    private Agendamento convertAgendamentoToEntinty(AgendamentoDTO agendamentoDTO) {
-        Agendamento agendamento = new Agendamento();
-
-        agendamento.setId(agendamentoDTO.id());
-        agendamento.setDataHora(agendamentoDTO.dataHora());
-
-        return agendamento;
     }
 }

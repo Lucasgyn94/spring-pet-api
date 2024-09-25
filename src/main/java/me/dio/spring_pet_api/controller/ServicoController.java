@@ -1,12 +1,9 @@
 package me.dio.spring_pet_api.controller;
 
 import me.dio.spring_pet_api.domain.dto.ServicoDTO;
-import me.dio.spring_pet_api.domain.model.Servico;
-import me.dio.spring_pet_api.domain.repository.ServicoRepository;
 import me.dio.spring_pet_api.service.ServicoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

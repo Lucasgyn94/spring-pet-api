@@ -34,7 +34,7 @@ public class PetController {
     @PostMapping
     @Transactional
     public ResponseEntity<PetDTO> salvar(@RequestBody PetDTO pet) {
-        if (pet.clienteDTO() == null || pet.clienteDTO().id() == null) {
+        if (pet.clienteId() == null) {
             return ResponseEntity.badRequest().body(null);
         }
         PetDTO petSalvo = petService.salvar(pet);

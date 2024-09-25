@@ -1,9 +1,6 @@
 package me.dio.spring_pet_api.controller;
 
 import me.dio.spring_pet_api.domain.dto.VeterinarioDTO;
-import me.dio.spring_pet_api.domain.model.Servico;
-import me.dio.spring_pet_api.domain.model.Veterinario;
-import me.dio.spring_pet_api.service.ServicoService;
 import me.dio.spring_pet_api.service.VeterinarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

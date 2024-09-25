@@ -38,8 +38,9 @@ public class AgendamentoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoSalvo);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<AgendamentoDTO> atualizar(Long id, AgendamentoDTO agendamentoAtualizado) {
+    public ResponseEntity<AgendamentoDTO> atualizar(@PathVariable Long id, @RequestBody AgendamentoDTO agendamentoAtualizado) {
         AgendamentoDTO agendamento = agendamentoService.atualizar(id, agendamentoAtualizado);
 
         if (agendamento.id() != null) {

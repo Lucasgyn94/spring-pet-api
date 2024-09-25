@@ -1,14 +1,19 @@
 package me.dio.spring_pet_api.domain.dto;
 
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 
-public record PetDTO (
+public record PetDTO(
         Long id,
+
+        @NotBlank
         String nome,
+
+        @NotBlank
         String tipo,
-        ClienteDTO clienteDTO,
-        List<ServicoDTO> servicos,
-        List<AgendamentoDTO> agendamentos
-){ }
+
+        @NotNull
+        Long clienteId
+) { }
