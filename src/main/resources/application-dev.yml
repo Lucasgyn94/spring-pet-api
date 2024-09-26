@@ -20,3 +20,14 @@ spring:
     settings:
       trace: false
       web-allow-others: false
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    config-url: /api-docs/swagger-config
+    url: /api-docs
+
+
+

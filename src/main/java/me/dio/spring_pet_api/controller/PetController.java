@@ -1,5 +1,7 @@
 package me.dio.spring_pet_api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import me.dio.spring_pet_api.domain.dto.PetDTO;
 import me.dio.spring_pet_api.service.PetService;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pet")
+@Tag(name = "Pet", description = "Endpoint para gerenciamento de pets")
 public class PetController {
     private final PetService petService;
 
@@ -19,20 +22,21 @@ public class PetController {
     }
 
     @GetMapping()
+    @Operation(summary = "Listar todos os Pets")
     public ResponseEntity<List<PetDTO>> listarTodos() {
         List<PetDTO> pets = petService.listarTodos();
         return ResponseEntity.ok(pets);
     }
 
     @GetMapping("/{id}")
-    @Transactional(readOnly = true)
+    @Operation(summary = "Buscar pet por ID")
     public ResponseEntity<PetDTO> buscarPorId(@PathVariable Long id) {
         PetDTO pet = petService.buscarPorId(id);
         return ResponseEntity.ok(pet);
     }
 
     @PostMapping
-    @Transactional
+    @Operation(summary = "Criar novo pet")
     public ResponseEntity<PetDTO> salvar(@RequestBody PetDTO pet) {
         if (pet.clienteId() == null) {
             return ResponseEntity.badRequest().body(null);
@@ -44,14 +48,14 @@ public class PetController {
 
 
     @PutMapping("/{id}")
-    @Transactional
+    @Operation(summary = "Atualizar pet existente")
     public ResponseEntity<PetDTO> atualizar(@PathVariable Long id, @RequestBody PetDTO petAtualizado) {
         PetDTO pet = petService.atualizar(id, petAtualizado);
         return ResponseEntity.ok(pet);
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
+    @Operation(summary = "Deletar pet existente por ID")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         petService.deletar(id);
         return ResponseEntity.noContent().build();
