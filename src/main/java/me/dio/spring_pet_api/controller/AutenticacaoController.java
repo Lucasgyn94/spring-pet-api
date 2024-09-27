@@ -1,6 +1,7 @@
 package me.dio.spring_pet_api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.dio.spring_pet_api.domain.dto.LoginDTO;
 import me.dio.spring_pet_api.domain.dto.UsuarioDTO;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Autenticaçao", description = "Endpoint para gerenciamento de autenticaçao")
+@SecurityRequirement(name = "bearer-key")
 public class AutenticacaoController {
 
     @Autowired

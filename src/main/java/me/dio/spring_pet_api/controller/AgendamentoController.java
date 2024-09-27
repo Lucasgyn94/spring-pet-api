@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.dio.spring_pet_api.domain.dto.AgendamentoDTO;
 import me.dio.spring_pet_api.service.AgendamentoService;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/agendamento")
 @Tag(name = "Agendamento", description = "Endpoints para gerenciamento de agendamentos")
+@SecurityRequirement(name = "bearer-key")
 public class AgendamentoController {
 
     private final AgendamentoService agendamentoService;

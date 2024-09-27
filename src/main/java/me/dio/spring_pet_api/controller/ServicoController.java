@@ -1,6 +1,7 @@
 package me.dio.spring_pet_api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.dio.spring_pet_api.domain.dto.ServicoDTO;
 import me.dio.spring_pet_api.service.ServicoService;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/servico")
 @Tag(name = "Serviço", description = "Endpoint para gerenciamento de serviços")
+@SecurityRequirement(name = "bearer-key")
 public class ServicoController {
 
     private final ServicoService servicoService;
