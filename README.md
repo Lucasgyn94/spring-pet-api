@@ -51,7 +51,7 @@ classDiagram
     Pet "1" -- "*" Agendamento : tem
     Agendamento "*" -- "1" Veterinario : atendido por
     Agendamento "*" -- "*" Servico : inclui
-    Usuario -- Cliente : pode ser
+    Usuario -- Cliente : autenticado
 
 
 ```
