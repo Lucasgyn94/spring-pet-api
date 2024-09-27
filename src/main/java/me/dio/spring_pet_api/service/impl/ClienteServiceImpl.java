@@ -1,7 +1,9 @@
 package me.dio.spring_pet_api.service.impl;
 
 import me.dio.spring_pet_api.domain.dto.ClienteDTO;
+import me.dio.spring_pet_api.domain.dto.PetDTO;
 import me.dio.spring_pet_api.domain.model.Cliente;
+import me.dio.spring_pet_api.domain.model.Pet;
 import me.dio.spring_pet_api.domain.repository.ClienteRepository;
 import me.dio.spring_pet_api.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +96,8 @@ public class ClienteServiceImpl implements ClienteService {
         return new ClienteDTO(
                 cliente.getId(),
                 cliente.getNome(),
-                cliente.getTelefone()
+                cliente.getTelefone(),
+                cliente.getPets().stream().map(this::convertPetToDto).collect(Collectors.toList())
         );
     }
 
@@ -103,5 +106,9 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setNome(clienteDTO.nome());
         cliente.setTelefone(clienteDTO.telefone());
         return cliente;
+    }
+
+    private PetDTO convertPetToDto(Pet pet) {
+        return new PetDTO(pet.getId(), pet.getNome(), pet.getTipo(), pet.getCliente().getId());
     }
 }
