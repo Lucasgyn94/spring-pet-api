@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Autenticaçao", description = "Endpoint para gerenciamento de autenticaçao")
-@SecurityRequirement(name = "bearer-key")
 public class AutenticacaoController {
 
     @Autowired
