@@ -1,5 +1,8 @@
 # 🐾 Pet Shop API
+
 Uma API robusta e eficiente para gerenciamento de Pet Shops, desenvolvida com Spring Boot.
+A mesma é parte integrante de um desafio lançado pelo Expert da DIO, onde pude colocar os conhecimentos
+adquiridos em prática e construir a minha própria API do zero e fazer o deploy na plataforma do Railway.
 
 ![image](https://github.com/user-attachments/assets/fa31dfde-230e-4eb5-ba30-ae0fd1db1b24)
 
